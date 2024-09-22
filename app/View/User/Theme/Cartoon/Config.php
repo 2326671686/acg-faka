@@ -74,7 +74,7 @@ interface Config
         "FORGET_PHONE" => "Authentication/ForgetPhone.html", //用户找回密码-手机
         "RECHARGE" => "User/Recharge.html", //会员-充值中心
         "BILL" => "User/Bill.html", //会员-我的账单
-        "BUSINESS" => "User/Business.html", //会员-我的店铺
+//        "BUSINESS" => "User/Business.html", //会员-我的店铺
         "CATEGORY" => "User/Category.html", //会员-商品分类
         "COMMODITY" => "User/Commodity.html", //会员-我的商品
         "CARD" => "User/Card.html", //会员-卡密管理
