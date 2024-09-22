@@ -33,7 +33,7 @@
                             至已出售选中卡密
                         </button>
                         <button class="btn btn-sm btn-light-primary btn-app-export me-3"><i
-                                    class="fas fa-file-export"></i>
+                                class="fas fa-file-export"></i>
                             导出筛选卡密
                         </button>
                     </div>
@@ -239,11 +239,18 @@
                             "例子2（卡密信息+无预选）：\nAAKvSsfWGnFdnqP\nf5V61wpeAIuX35t\n1a9Xn35qsEQwp32\n\n提示：#[我是预选信息内容]#，预选信息代表买家在购买的时候可以通过加价的方式预选自己想购买的卡密信息，一般用作与购买自己想要的账号等",
                         height: 420
                     },
+                    //{
+                    //    title: "",
+                    //    name: "explain",
+                    //    type: "explain",
+                    //    placeholder: '<input class="draft-input" style="border:1px solid #fdabe678;border-radius: 5px;padding: 0 0 0 5px;" type="text" placeholder="预选卡密隐藏正则，可不填"><button type="button" style="border: none;margin-left: 5px;padding: 0 5px 0 5px;background: #fd6ace96;border-radius: 5px;color: whitesmoke;" class="draft-btn">处理</button>'
+                    //},
                     {
-                        title: "",
-                        name: "explain",
+                        title: "生成卡密",
+                        name: "generate_secret",
                         type: "explain",
-                        placeholder: '<input class="draft-input" style="border:1px solid #fdabe678;border-radius: 5px;padding: 0 0 0 5px;" type="text" placeholder="预选卡密隐藏正则，可不填"><button type="button" style="border: none;margin-left: 5px;padding: 0 5px 0 5px;background: #fd6ace96;border-radius: 5px;color: whitesmoke;" class="draft-btn">处理</button>'
+                        placeholder: '<input class="generate-quantity" style="border:1px solid #fdabe678;border-radius: 5px;padding:5px;" type="number" placeholder="生成卡密数量">' +
+                            '<button type="button" style="border: none;margin-left: 5px;padding: 2px 5px 2px 5px;background: #8bc34a;border-radius: 5px;color: whitesmoke;cursor:pointer;" class="generate-btn">生成</button>'
                     },
                     {
                         title: "去除重复",
@@ -273,12 +280,43 @@
                         cao.popupElement("secret", "textarea", unqueId).val(newCards.trim());
                         layer.msg("预选卡密处理完成，已处理：" + success + "，未处理：" + error);
                     });
+
+                    // 生成卡密按钮事件
+                    $('.generate-btn').click(function () {
+                        let quantity = parseInt($('.generate-quantity').val());
+                        if (isNaN(quantity) || quantity <= 0) {
+                            layer.msg("请输入有效的生成数量！");
+                            return;
+                        }
+
+                        let generatedCards = "";
+                        for (let i = 0; i < quantity; i++) {
+                            let card = generateRandomMd5();
+                            console.log(card);
+                            generatedCards += card + "\n";
+                        }
+
+                        // 将生成的卡密追加到卡密信息
+                        let currentCards = cao.popupElement("secret", "textarea", unqueId).val();
+                        cao.popupElement("secret", "textarea", unqueId).val((currentCards.trim() + "\n" + generatedCards.trim()).trim());
+
+                        layer.msg("成功生成 " + quantity + " 个卡密！");
+                    });
+
+                    // 生成16位MD5卡密的函数
+                    function generateRandomMd5() {
+                        let randomString = Math.random().toString(36).substr(2, 16)+new Date().getTime();
+                        // return md5(randomString).substr(0, 16);
+                        return randomString;
+                    };
+
                 });
             }
 
             $('.btn-app-create').click(function () {
                 modal();
             });
+
 
             $('.btn-app-del').click(() => {
                 let data = cao.listObjectToArray(table.bootstrapTable('getSelections'));
