@@ -106,6 +106,12 @@ class Card extends Manage
             if (isset($_POST['note'])) {
                 $cardObj->note = $_POST['note'];
             }
+
+
+            if (isset($_POST['day'])) {
+                $cardObj->day = (int)$_POST['day'];
+            }
+
             $cardObj->status = 0;
 
             if (isset($cardy[1])) {

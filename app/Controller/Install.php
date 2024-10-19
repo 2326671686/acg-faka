@@ -42,15 +42,15 @@ class Install extends User
         $data = [];
         $data['version'] = config("app")['version'];
         $data['php_version'] = phpversion();
-
-        $data['ext']['gd'] = extension_loaded("gd");
-        $data['ext']['curl'] = extension_loaded("curl");
-        $data['ext']['pdo'] = extension_loaded("PDO");
-        $data['ext']['pdo_mysql'] = extension_loaded("pdo_mysql");
-        $data['ext']['date'] = extension_loaded("date");
-        $data['ext']['json'] = extension_loaded("json");
-        $data['ext']['session'] = extension_loaded("session");
-        $data['ext']['zip'] = extension_loaded("zip");
+//todo
+//        $data['ext']['gd'] = extension_loaded("gd");
+//        $data['ext']['curl'] = extension_loaded("curl");
+//        $data['ext']['pdo'] = extension_loaded("PDO");
+//        $data['ext']['pdo_mysql'] = extension_loaded("pdo_mysql");
+//        $data['ext']['date'] = extension_loaded("date");
+//        $data['ext']['json'] = extension_loaded("json");
+//        $data['ext']['session'] = extension_loaded("session");
+//        $data['ext']['zip'] = extension_loaded("zip");
 
 
         $data['install'] = true;

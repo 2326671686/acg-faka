@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $secret
  * @property string $note
  * @property int $status
+ * @property int $day
  * @property string $race
  */
 class Card extends Model
@@ -34,7 +35,7 @@ class Card extends Model
     /**
      * @var array
      */
-    protected $casts = ['commodity_id' => 'integer', 'id' => 'integer', 'order_id' => 'integer', 'owner' => 'integer', 'status' => 'integer'];
+    protected $casts = ['commodity_id' => 'integer', 'id' => 'integer', 'order_id' => 'integer', 'owner' => 'integer', 'status' => 'integer', 'day' => 'integer'];
 
 
     public function owner(): ?\Illuminate\Database\Eloquent\Relations\HasOne

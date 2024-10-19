@@ -55,6 +55,57 @@ class Index extends User
     }
 
     /**
+     * @param string $key
+     * @return string
+     */
+    public function check(#[Get] string $key): string
+    {
+        if (empty($key)) {
+            throw new JSONException("参数为空");
+
+        }
+
+        // 获取 GET 请求中的 key
+        $keyValue = (string)$_GET['key'];
+        if (empty($keyValue)) {
+            throw new JSONException("参数为空2");
+        }
+
+
+        // 设置查询条件
+        $map = [
+            'equal-secret' => $keyValue,
+        ];
+
+        $queryTemplateEntity = new QueryTemplateEntity();
+        $queryTemplateEntity->setModel(\App\Model\Card::class);
+        $queryTemplateEntity->setLimit(1);
+        $queryTemplateEntity->setPage((1));
+        $queryTemplateEntity->setPaginate(true);
+        $queryTemplateEntity->setWhere($map);
+        $data = $this->query->findTemplateAll($queryTemplateEntity)->toArray();
+        $json = $this->json(200, null, $data['data']);
+//        return $json;
+        // 提取 createTime 和 day
+        foreach ($data['data'] as $item) {
+            $createTime = strtotime($item['create_time']); // 转换为时间戳
+            $daysToAdd = (int)$item['day']; // 转换为整数
+
+            // 计算新的时间
+            $newTime = $createTime + ($daysToAdd * 86400); // 86400 秒 = 1 天
+
+            // 比较时间
+            if ($newTime > time()) {
+                return "0";
+            }
+        }
+
+        return "1";
+
+    }
+
+
+    /**
      * @param int $categoryId
      * @return array
      * @throws JSONException

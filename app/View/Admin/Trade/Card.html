@@ -117,6 +117,15 @@
                         }
                     }
                     , {
+                        field: 'day', title: '天数', formatter: function (val, item) {
+                            if (!item.commodity) {
+                                return "-";
+                            }
+                            return '<span class="badge badge-light" style="cursor: pointer;" >' + item.day + '</span>';
+
+                        }
+                    }
+                    , {
                         field: 'race', title: '类别', formatter: function (val, item) {
                             if (!item.race) {
                                 return "-";
@@ -138,6 +147,14 @@
                                 return '-';
                             }
                             return item.purchase_time;
+                        }
+                    }
+                    , {
+                        field: 'activation_time', title: '激活时间', formatter: function (val, item) {
+                            if (!item.activation_time) {
+                                return '-';
+                            }
+                            return item.activation_time;
                         }
                     }
                     , {
@@ -223,6 +240,12 @@
                         name: "race",
                         type: "input",
                         placeholder: "商品类别，一般你用不着，而且不懂不要乱填哦，想用请查看说明文档"
+                    },
+                    {
+                        title: "使用天数",
+                        name: "day",
+                        type: "input",
+                        placeholder: "填写数值(默认1天)"
                     },
                     {
                         title: "备注信息",
@@ -436,6 +459,7 @@
                     dict: "commodity->owner=0 and delivery_way=0 and (shared_id is null or shared_id=0),id,name",
                     search: true
                 },
+                {title: "使用天数", name: "equal-day", type: "input"},
                 {title: "商品类别", name: "equal-race", type: "input"},
                 {title: "卡密所属会员ID，0=系统", name: "equal-owner", type: "input"},
                 {title: "入库时间从", name: "betweenStart-create_time", type: "date"},
